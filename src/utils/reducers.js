@@ -1,10 +1,10 @@
 export const ActionTypes = {
-  SET_COLOR: "SET_COLOR",
-  SELECT_COLOR: "SELECT_COLOR",
-  TOGGLE_QUADRANTS_EMPTY: "TOGGLE_QUADRANTS_EMPTY",
-  SET_EMPTY_COLOR: "SET_EMPTY_COLOR",
-  TOGGLE_QUADRANTS_COLORED: "TOGGLE_QUADRANTS_COLORED",
-  SET_COLORED_COLOR: "SET_COLORED_COLOR",
+  SET_SQUARE_COLOR: "SET_SQUARE_COLOR",
+  SELECT_DEFAULT_COLOR: "SELECT_DEFAULT_COLOR",
+  TOGGLE_EMPTY_QUADRANTS: "TOGGLE_EMPTY_QUADRANTS",
+  SET_EMPTY_SQUARE_COLOR: "SET_EMPTY_SQUARE_COLOR",
+  TOGGLE_COLORED_QUADRANTS: "TOGGLE_COLORED_QUADRANTS",
+  SET_COLORED_SQUARE_COLOR: "SET_COLORED_SQUARE_COLOR",
 };
 
 export const initialState = {
@@ -34,7 +34,7 @@ export const colors = [
 
 const reducer = (state, action) => {
   switch (action.type) {
-    case ActionTypes.SET_COLOR:
+    case ActionTypes.SET_SQUARE_COLOR:
       const { row, col } = action.payload;
       const { quadrantsData, selectedColor } = state;
 
@@ -52,31 +52,31 @@ const reducer = (state, action) => {
       }
       return state;
 
-    case ActionTypes.SELECT_COLOR:
+    case ActionTypes.SELECT_DEFAULT_COLOR:
       return {
         ...state,
         selectedColor: action.payload.color,
       };
 
-    case ActionTypes.TOGGLE_QUADRANTS_EMPTY:
+    case ActionTypes.TOGGLE_EMPTY_QUADRANTS:
       return {
         ...state,
         areQuadrantsEmpty: !state.areQuadrantsEmpty,
       };
 
-    case ActionTypes.SET_EMPTY_COLOR:
+    case ActionTypes.SET_EMPTY_SQUARE_COLOR:
       return {
         ...state,
         emptySquareColor: action.payload.color,
       };
 
-    case ActionTypes.TOGGLE_QUADRANTS_COLORED:
+    case ActionTypes.TOGGLE_COLORED_QUADRANTS:
       return {
         ...state,
         areQuadrantsColored: !state.areQuadrantsColored,
       };
 
-    case ActionTypes.SET_COLORED_COLOR:
+    case ActionTypes.SET_COLORED_SQUARE_COLOR:
       return {
         ...state,
         coloredSquareColor: action.payload.color,

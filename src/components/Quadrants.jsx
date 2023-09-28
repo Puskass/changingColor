@@ -7,17 +7,17 @@ const QuadrantsGrid = () => {
   const handleColorChange = (event) => {
     const selectedColor = event.target.value;
     dispatch({
-      type: ActionTypes.SELECT_COLOR,
+      type: ActionTypes.SELECT_DEFAULT_COLOR,
       payload: { color: selectedColor },
     });
   };
 
   const handleColorSelect = (color) => {
-    dispatch({ type: ActionTypes.SELECT_COLOR, payload: { color } });
+    dispatch({ type: ActionTypes.SELECT_DEFAULT_COLOR, payload: { color } });
   };
 
   const handleSquareClick = (row, col) => {
-    dispatch({ type: ActionTypes.SET_COLOR, payload: { row, col } });
+    dispatch({ type: ActionTypes.SET_SQUARE_COLOR, payload: { row, col } });
   };
 
   const renderGrid = (grid) => {

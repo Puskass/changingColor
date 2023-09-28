@@ -7,47 +7,47 @@ const App = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   const handleColoredColorChange = (event) => {
-    // const coloredSquareColor = event.target.value;
-    // dispatch({
-    //   type: ActionTypes.SET_COLORED_COLOR,
-    //   payload: { color: coloredSquareColor },
-    // });
+    const coloredSquareColor = event.target.value;
+    dispatch({
+      type: ActionTypes.SET_COLORED_SQUARE_COLOR,
+      payload: { color: coloredSquareColor },
+    });
   };
 
   const handleToggleEmpty = () => {
-    // dispatch({ type: ActionTypes.TOGGLE_QUADRANTS_EMPTY });
+    dispatch({ type: ActionTypes.TOGGLE_EMPTY_QUADRANTS });
   };
 
   const handleToggleColored = () => {
-    // dispatch({ type: ActionTypes.TOGGLE_QUADRANTS_COLORED });
+    dispatch({ type: ActionTypes.TOGGLE_COLORED_QUADRANTS });
   };
 
   const handlePaintButtonClick = () => {
-    // if (state.selectedColor) {
-    //   if (state.areQuadrantsEmpty) {
-    //     const newQuadrantsData = state.quadrantsData.map((quadrant) => ({
-    //       grid: quadrant.grid.map((rowArray) =>
-    //         rowArray.map((cell) => (cell === null ? state.selectedColor : cell))
-    //       ),
-    //     }));
-    //     dispatch({
-    //       type: ActionTypes.SET_COLOR,
-    //       payload: { grid: newQuadrantsData[0].grid },
-    //     });
-    //   } else if (state.areQuadrantsColored) {
-    //     const newQuadrantsData = state.quadrantsData.map((quadrant) => ({
-    //       grid: quadrant.grid.map((rowArray) =>
-    //         rowArray.map((cell) =>
-    //           cell === state.coloredSquareColor ? state.selectedColor : cell
-    //         )
-    //       ),
-    //     }));
-    //     dispatch({
-    //       type: ActionTypes.SET_COLOR,
-    //       payload: { grid: newQuadrantsData[0].grid },
-    //     });
-    //   }
-    // }
+    if (state.selectedColor) {
+      if (state.areQuadrantsEmpty) {
+        const newQuadrantsData = state.quadrantsData.map((quadrant) => ({
+          grid: quadrant.grid.map((rowArray) =>
+            rowArray.map((cell) => (cell === null ? state.selectedColor : cell))
+          ),
+        }));
+        dispatch({
+          type: ActionTypes.SET_SQUARE_COLOR,
+          payload: { grid: newQuadrantsData[0].grid },
+        });
+      } else if (state.areQuadrantsColored) {
+        const newQuadrantsData = state.quadrantsData.map((quadrant) => ({
+          grid: quadrant.grid.map((rowArray) =>
+            rowArray.map((cell) =>
+              cell === state.coloredSquareColor ? state.selectedColor : cell
+            )
+          ),
+        }));
+        dispatch({
+          type: ActionTypes.SET_SQUARE_COLOR,
+          payload: { grid: newQuadrantsData[0].grid },
+        });
+      }
+    }
   };
 
   return (
@@ -61,7 +61,7 @@ const App = () => {
           <option value="">None</option>
           {colors.map((color) => (
             <option key={color.value} value={color.value}>
-              {color.name}
+              {color.label}
             </option>
           ))}
         </select>
