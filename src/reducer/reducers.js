@@ -1,4 +1,4 @@
-export const ActionTypes = {
+export const ACTION_TYPES = {
   SET_SQUARE_COLOR: "SET_SQUARE_COLOR",
   SELECT_DEFAULT_COLOR: "SELECT_DEFAULT_COLOR",
   TOGGLE_EMPTY_QUADRANTS: "TOGGLE_EMPTY_QUADRANTS",
@@ -8,33 +8,20 @@ export const ActionTypes = {
 };
 
 export const initialState = {
-  quadrantsData: [
-    {
-      grid: [
-        [null, null, null, null, null],
-        [null, null, null, null, null],
-        [null, null, null, null, null],
-        [null, null, null, null, null],
-        [null, null, null, null, null],
-      ],
-    },
+  grid: [
+    [null, null, null, null, null],
+    [null, null, null, null, null],
+    [null, null, null, null, null],
+    [null, null, null, null, null],
+    [null, null, null, null, null],
   ],
-  selectedColor: "",
-  areQuadrantsEmpty: true,
-  emptySquareColor: null,
-  areQuadrantsColored: false,
-  coloredSquareColor: null,
 };
 
-export const colors = [
-  { label: "Red", value: "red" },
-  { label: "Blue", value: "blue" },
-  { label: "Green", value: "green" },
-];
+
 
 const reducer = (state, action) => {
   switch (action.type) {
-    case ActionTypes.SET_SQUARE_COLOR:
+    case ACTION_TYPES.SET_SQUARE_COLOR:
       const { row, col } = action.payload;
       const { quadrantsData, selectedColor } = state;
 
@@ -52,31 +39,31 @@ const reducer = (state, action) => {
       }
       return state;
 
-    case ActionTypes.SELECT_DEFAULT_COLOR:
+    case ACTION_TYPES.SELECT_DEFAULT_COLOR:
       return {
         ...state,
         selectedColor: action.payload.color,
       };
 
-    case ActionTypes.TOGGLE_EMPTY_QUADRANTS:
+    case ACTION_TYPES.TOGGLE_EMPTY_QUADRANTS:
       return {
         ...state,
         areQuadrantsEmpty: !state.areQuadrantsEmpty,
       };
 
-    case ActionTypes.SET_EMPTY_SQUARE_COLOR:
+    case ACTION_TYPES.SET_EMPTY_SQUARE_COLOR:
       return {
         ...state,
         emptySquareColor: action.payload.color,
       };
 
-    case ActionTypes.TOGGLE_COLORED_QUADRANTS:
+    case ACTION_TYPES.TOGGLE_COLORED_QUADRANTS:
       return {
         ...state,
         areQuadrantsColored: !state.areQuadrantsColored,
       };
 
-    case ActionTypes.SET_COLORED_SQUARE_COLOR:
+    case ACTION_TYPES.SET_COLORED_SQUARE_COLOR:
       return {
         ...state,
         coloredSquareColor: action.payload.color,

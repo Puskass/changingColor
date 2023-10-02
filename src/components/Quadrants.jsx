@@ -1,5 +1,5 @@
 import React, { useReducer } from "react";
-import reducer, { ActionTypes, colors, initialState } from "../utils/reducers";
+import reducer, { ACTION_TYPES, COLORS, initialState } from "../reducer/reducers";
 
 const QuadrantsGrid = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
@@ -7,17 +7,17 @@ const QuadrantsGrid = () => {
   const handleColorChange = (event) => {
     const selectedColor = event.target.value;
     dispatch({
-      type: ActionTypes.SELECT_DEFAULT_COLOR,
+      type: ACTION_TYPES.SELECT_DEFAULT_COLOR,
       payload: { color: selectedColor },
     });
   };
 
   const handleColorSelect = (color) => {
-    dispatch({ type: ActionTypes.SELECT_DEFAULT_COLOR, payload: { color } });
+    dispatch({ type: ACTION_TYPES.SELECT_DEFAULT_COLOR, payload: { color } });
   };
 
   const handleSquareClick = (row, col) => {
-    dispatch({ type: ActionTypes.SET_SQUARE_COLOR, payload: { row, col } });
+    dispatch({ type: ACTION_TYPES.SET_SQUARE_COLOR, payload: { row, col } });
   };
 
   const renderGrid = (grid) => {
@@ -39,6 +39,20 @@ const QuadrantsGrid = () => {
 
   return (
     <div>
+      {grid.map((row, i) => (
+      <React.Fragment key={i}>
+        {row.map((cell, j) => (
+          <div
+            className={`w-16 h-16 sm:w-24 sm:h-24 flex items-center justify-center border shadow-md rounded-xl hover:animate-bump ${
+              cell ? 'font-bold bg-amber-400 hover:bg-amber-500' : 'bg-white'
+            }`}
+            key={j}
+          >
+            <span>{cell}</span>
+          </div>
+        ))}
+      </React.Fragment>
+    ))}
       <h1>Select Default Color</h1>
       <div className="mb-4">
         <div>
@@ -48,7 +62,7 @@ const QuadrantsGrid = () => {
           >
             <option value="">None</option>
 
-            {colors.map((color) => (
+            {COLORS.map((color) => (
               <option
                 key={color.value}
                 value={color.value}

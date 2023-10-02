@@ -1,98 +1,21 @@
-import React, { useReducer } from "react";
-import QuadrantsGrid from "./components/Quadrants";
-import { ActionTypes, colors, initialState } from "./utils/reducers";
-import reducer from "./utils/reducers";
+import React, { useState } from "react";
+import Form from "./components/Form";
+import Grid from "./components/Grid";
 
 const App = () => {
-  const [state, dispatch] = useReducer(reducer, initialState);
+  const [selectedColor, setSelectedColor] = useState("");
+  const [isFilled, setIsFilled] = useState(true);
 
-  const handleColoredColorChange = (event) => {
-    const coloredSquareColor = event.target.value;
-    dispatch({
-      type: ActionTypes.SET_COLORED_SQUARE_COLOR,
-      payload: { color: coloredSquareColor },
-    });
-  };
-
-  const handleToggleEmpty = () => {
-    dispatch({ type: ActionTypes.TOGGLE_EMPTY_QUADRANTS });
-  };
-
-  const handleToggleColored = () => {
-    dispatch({ type: ActionTypes.TOGGLE_COLORED_QUADRANTS });
-  };
-
-  const handlePaintButtonClick = () => {
-    if (state.selectedColor) {
-      if (state.areQuadrantsEmpty) {
-        const newQuadrantsData = state.quadrantsData.map((quadrant) => ({
-          grid: quadrant.grid.map((rowArray) =>
-            rowArray.map((cell) => (cell === null ? state.selectedColor : cell))
-          ),
-        }));
-        dispatch({
-          type: ActionTypes.SET_SQUARE_COLOR,
-          payload: { grid: newQuadrantsData[0].grid },
-        });
-      } else if (state.areQuadrantsColored) {
-        const newQuadrantsData = state.quadrantsData.map((quadrant) => ({
-          grid: quadrant.grid.map((rowArray) =>
-            rowArray.map((cell) =>
-              cell === state.coloredSquareColor ? state.selectedColor : cell
-            )
-          ),
-        }));
-        dispatch({
-          type: ActionTypes.SET_SQUARE_COLOR,
-          payload: { grid: newQuadrantsData[0].grid },
-        });
-      }
-    }
+  const handleFormSubmit = (color, fillType) => {
+    setSelectedColor(color);
+    setIsFilled(fillType);
   };
 
   return (
     <div>
-      <form>
-        <h1>Paint In</h1>
-        <select
-          onChange={handleColoredColorChange}
-          value={state.coloredSquareColor || ""}
-        >
-          <option value="">None</option>
-          {colors.map((color) => (
-            <option key={color.value} value={color.value}>
-              {color.label}
-            </option>
-          ))}
-        </select>
-
-        <div className="flex flex-col">
-          <div>
-            <input
-              type="radio"
-              name="quadrantType"
-              onChange={handleToggleEmpty}
-              checked={state.areQuadrantsEmpty}
-            />
-            <label>Empty Ones</label>
-          </div>
-          <div>
-            <input
-              type="radio"
-              name="quadrantType"
-              onChange={handleToggleColored}
-              checked={state.areQuadrantsColored}
-            />
-            <label>Colored Ones</label>
-          </div>
-        </div>
-
-        <button type="button" onClick={handlePaintButtonClick}>
-          Paint
-        </button>
-      </form>
-
-      <QuadrantsGrid initialState={state} />
+      <h1>Color the Squares</h1>
+      <Form onSubmit={handleFormSubmit} />
+      <Grid selectedColor={selectedColor} isFilled={isFilled} />
     </div>
   );
 };
