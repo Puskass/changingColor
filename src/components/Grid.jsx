@@ -1,17 +1,18 @@
 import React from "react";
 import Cell from "./Cell";
-import { grid } from "../data/quadrants";
+import { INITIAL_STATE } from "../reducer/colorsReducer";
 
-const Grid = ({ onCellClick }) => {
+const Grid = ({ grid, onCellClick }) => {
+  //const { grid } = INITIAL_STATE;
   return (
     <div>
       {grid.map((row, rowIndex) => (
-        <div key={rowIndex} className="flex">
-          {row.map((cellColor, colIndex) => (
+        <div className="flex justify-evenly" key={rowIndex}>
+          {row.map((cellColor, columnIndex) => (
             <Cell
-              key={colIndex}
+              key={columnIndex}
               color={cellColor}
-              onClick={() => onCellClick(rowIndex, colIndex)}
+              onClick={() => onCellClick(rowIndex, columnIndex)}
             />
           ))}
         </div>

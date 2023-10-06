@@ -1,12 +1,17 @@
 import React from "react";
 
 const Cell = ({ color, onClick }) => {
+  console.log(color);
   return (
     <div
-      className={`w-10 h-10 border border-cyan-500 m-2 ${color ? "filled" : ""}`}
-      style={{ backgroundColor: color }}
+      className={`w-12 h-12 border border-black mb-3 ${
+        color ? `bg-${color}-500` : ""
+      }`}
       onClick={onClick}
-    ></div>
+    >
+      {" "}
+      {color}
+    </div>
   );
 };
 

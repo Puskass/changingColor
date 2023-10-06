@@ -1,21 +1,41 @@
-import React, { useState } from "react";
-import Form from "./components/Form";
+import React, { useReducer } from "react";
 import Grid from "./components/Grid";
+import PaintForm from "./components/PaintForm";
+import ColorOptions from "./common/ColorOptions";
+import {
+  ACTION_TYPES,
+  INITIAL_STATE,
+  colorsReducer,
+} from "./reducer/colorsReducer";
 
 const App = () => {
-  const [selectedColor, setSelectedColor] = useState("");
-  const [isFilled, setIsFilled] = useState(true);
+  const [state, dispatch] = useReducer(colorsReducer, INITIAL_STATE);
 
-  const handleFormSubmit = (color, fillType) => {
-    setSelectedColor(color);
-    setIsFilled(fillType);
+  const handleCellClick = (rowIndex, columnIndex) => {
+    if (state.selectedDefaultColor) {
+      dispatch({
+        type: ACTION_TYPES.PAINT_CELL,
+        payload: { rowIndex, columnIndex },
+      });
+    }
   };
 
   return (
-    <div>
-      <h1>Color the Squares</h1>
-      <Form onSubmit={handleFormSubmit} />
-      <Grid selectedColor={selectedColor} isFilled={isFilled} />
+    <div className="max-w-xs mx-auto">
+      <div className="my-3">
+        <h1 className="text-2xl font-medium my-2">Select Default Color</h1>
+        <ColorOptions
+          selectedDefaultColor={state.selectedDefaultColor}
+          onDefaultColorChange={(color) =>
+            dispatch({
+              type: ACTION_TYPES.SET_DEFAULT_COLOR,
+              payload: { color },
+            })
+          }
+        />
+      </div>
+      <PaintForm />
+      <Grid grid={state.grid} onCellClick={handleCellClick} />
     </div>
   );
 };
