@@ -1,11 +1,11 @@
 import React from "react";
 import { COLORS } from "../data/quadrants";
 
-const ColorOptions = ({ selectedDefaultColor, onDefaultColorChange }) => {
+const ColorOptions = ({ selectedValue, onValueChange }) => {
   return (
     <select
-      onChange={(e) => onDefaultColorChange(e.target.value)}
-      value={selectedDefaultColor}
+      onChange={(e) => onValueChange(e.target.value)}
+      value={selectedValue}
       className="outline-none w-1/3"
     >
       <option value="">None</option>

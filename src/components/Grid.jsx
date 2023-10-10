@@ -1,23 +1,25 @@
 import React from "react";
 import Cell from "./Cell";
-import { INITIAL_STATE } from "../reducer/colorsReducer";
 
-const Grid = ({ grid, onCellClick }) => {
-  //const { grid } = INITIAL_STATE;
+const Grid = ({ grid, dispatch, selectedColor }) => {
+  console.log(grid);
   return (
-    <div>
-      {grid.map((row, rowIndex) => (
-        <div className="flex justify-evenly" key={rowIndex}>
-          {row.map((cellColor, columnIndex) => (
+    <>
+      {grid.map((row, rowPos) => (
+        <div className="flex justify-evenly" key={rowPos}>
+          {row.map((cell, colPos) => (
             <Cell
-              key={columnIndex}
-              color={cellColor}
-              onClick={() => onCellClick(rowIndex, columnIndex)}
+              key={colPos}
+              cell={cell}
+              rowPos={rowPos}
+              colPos={colPos}
+              dispatch={dispatch}
+              selectedColor={selectedColor}
             />
           ))}
         </div>
       ))}
-    </div>
+    </>
   );
 };
 
