@@ -20,7 +20,6 @@ const PaintForm = ({ state, dispatch }) => {
       type: ACTION_TYPES.SET_RADIO_OPTION,
       option: option,
     });
-    console.log(option);
   };
   return (
     <form>

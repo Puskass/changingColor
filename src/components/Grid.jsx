@@ -2,7 +2,6 @@ import React from "react";
 import Cell from "./Cell";
 
 const Grid = ({ grid, dispatch, selectedColor }) => {
-  console.log(grid);
   return (
     <>
       {grid.map((row, rowPos) => (
