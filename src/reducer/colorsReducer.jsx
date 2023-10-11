@@ -1,6 +1,7 @@
 export const ACTION_TYPES = {
   SET_DEFAULT_COLOR: "SET_DEFAULT_COLOR",
   PAINT_CELL: "PAINT_CELL",
+  SET_DEPENDANT_COLOR: "SET_DEPENDANT_COLOR",
   SET_RADIO_OPTION: "SET_RADIO_OPTION",
   PAINT_EMPTY_CELLS: "PAINT_EMPTY_CELLS",
   PAINT_COLORED_CELLS: "PAINT_COLORED_CELLS",
@@ -9,6 +10,7 @@ export const ACTION_TYPES = {
 
 export const INITIAL_STATE = {
   selectedColor: "",
+  dependantColor: "",
   selectedRadioOption: "empty",
   grid: [
     [
@@ -149,7 +151,6 @@ export const colorsReducer = (state, action) => {
         ...state,
         grid: coloredGrid,
       };
-
     default:
       return state;
   }
