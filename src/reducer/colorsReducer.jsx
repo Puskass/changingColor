@@ -1,78 +1,20 @@
 export const ACTION_TYPES = {
   SET_DEFAULT_COLOR: "SET_DEFAULT_COLOR",
   PAINT_CELL: "PAINT_CELL",
-  SET_DEPENDANT_COLOR: "SET_DEPENDANT_COLOR",
   SET_RADIO_OPTION: "SET_RADIO_OPTION",
   PAINT_EMPTY_CELLS: "PAINT_EMPTY_CELLS",
   PAINT_COLORED_CELLS: "PAINT_COLORED_CELLS",
-  UNDO_COLOR: "UNDO_COLOR",
 };
 
 export const INITIAL_STATE = {
   selectedColor: "",
-  dependantColor: "",
   selectedRadioOption: "empty",
   grid: [
-    [
-      { color: null, history: [] },
-      ,
-      { color: null, history: [] },
-      ,
-      { color: null, history: [] },
-      ,
-      { color: null, history: [] },
-      ,
-      { color: null, history: [] },
-      ,
-    ],
-    [
-      { color: null, history: [] },
-      ,
-      { color: null, history: [] },
-      ,
-      { color: null, history: [] },
-      ,
-      { color: null, history: [] },
-      ,
-      { color: null, history: [] },
-      ,
-    ],
-    [
-      { color: null, history: [] },
-      ,
-      { color: null, history: [] },
-      ,
-      { color: null, history: [] },
-      ,
-      { color: null, history: [] },
-      ,
-      { color: null, history: [] },
-      ,
-    ],
-    [
-      { color: null, history: [] },
-      ,
-      { color: null, history: [] },
-      ,
-      { color: null, history: [] },
-      ,
-      { color: null, history: [] },
-      ,
-      { color: null, history: [] },
-      ,
-    ],
-    [
-      { color: null, history: [] },
-      ,
-      { color: null, history: [] },
-      ,
-      { color: null, history: [] },
-      ,
-      { color: null, history: [] },
-      ,
-      { color: null, history: [] },
-      ,
-    ],
+    [null, null, null, null, null],
+    [null, null, null, null, null],
+    [null, null, null, null, null],
+    [null, null, null, null, null],
+    [null, null, null, null, null],
   ],
 };
 
@@ -86,28 +28,8 @@ export const colorsReducer = (state, action) => {
 
     case ACTION_TYPES.PAINT_CELL:
       const { rowPos, colPos } = action;
-      const cell = state.grid[rowPos][colPos];
-      let updatedCell;
-
-      if (cell.color !== state.selectedColor) {
-        updatedCell = {
-          ...cell,
-          color: state.selectedColor,
-          history: [...cell.history, cell.color],
-        };
-      } else {
-        updatedCell = {
-          ...cell,
-          color: null,
-        };
-      }
-
-      const updatedGrid = state.grid.map((row, rowIndex) =>
-        rowIndex === rowPos
-          ? [...row.slice(0, colPos), updatedCell, ...row.slice(colPos + 1)]
-          : row
-      );
-
+      const updatedGrid = [...state.grid];
+      updatedGrid[rowPos][colPos] = state.selectedColor;
       return {
         ...state,
         grid: updatedGrid,
@@ -121,28 +43,15 @@ export const colorsReducer = (state, action) => {
 
     case ACTION_TYPES.PAINT_EMPTY_CELLS:
       const emptyGrid = state.grid.map((row) =>
-        row.map((cell) => {
-          if (cell.color === null) {
-            return {
-              ...cell,
-              color: state.selectedColor,
-              history: [...cell.history, cell.color],
-            };
-          }
-          return cell;
-        })
+        row.map((cell) => (cell === null ? state.selectedColor : cell))
       );
       return { ...state, grid: emptyGrid };
 
     case ACTION_TYPES.PAINT_COLORED_CELLS:
       const coloredGrid = state.grid.map((row) =>
         row.map((cell) => {
-          if (cell.color !== null) {
-            return {
-              ...cell,
-              color: state.selectedColor,
-              history: [...cell.history, cell.color],
-            };
+          if (cell !== null) {
+            return state.selectedColor;
           }
           return cell;
         })
@@ -151,6 +60,7 @@ export const colorsReducer = (state, action) => {
         ...state,
         grid: coloredGrid,
       };
+
     default:
       return state;
   }

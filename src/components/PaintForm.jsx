@@ -42,25 +42,6 @@ const PaintForm = ({ state, dispatch }) => {
           <option value="blue">Blue</option>
         </select>
       </div>
-      <div className="my-3">
-        <h1 className="text-2xl font-medium my-2">Paint in</h1>
-        <select
-          defaultValue=""
-          onChange={(e) =>
-            dispatch({
-              type: ACTION_TYPES.SET_DEPENDANT_COLOR,
-              color: e.target.value,
-            })
-          }
-        >
-          <option value="" disabled>
-            Select a Color
-          </option>
-          <option value="red">Red</option>
-          <option value="green">Green</option>
-          <option value="blue">Blue</option>
-        </select>
-      </div>
 
       <div className="my-2">
         <div>
