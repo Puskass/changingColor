@@ -31,9 +31,9 @@ export const colorsReducer = (state, action) => {
       const updatedGrid = state.grid.map((row, rowIndex) =>
         rowIndex === rowPos
           ? row.map((cell, colIndex) =>
-              colIndex === colPos ? [...cell, state.selectedColor] : cell
+              colIndex === colPos ? [...cell, state.selectedColor] : [...cell]
             )
-          : row
+          : [...row]
       );
       return {
         ...state,
@@ -54,7 +54,12 @@ export const colorsReducer = (state, action) => {
 
     case ACTION_TYPES.PAINT_COLORED_CELLS:
       const coloredGrid = state.grid.map((row) =>
-        row.map(() => state.selectedColor)
+        row.map((cell) => {
+          if (cell.length !== 0) {
+            return state.selectedColor;
+          }
+          return cell;
+        })
       );
       return {
         ...state,
