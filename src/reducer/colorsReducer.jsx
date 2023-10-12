@@ -10,11 +10,11 @@ export const INITIAL_STATE = {
   selectedColor: "",
   selectedRadioOption: "empty",
   grid: [
-    [null, null, null, null, null],
-    [null, null, null, null, null],
-    [null, null, null, null, null],
-    [null, null, null, null, null],
-    [null, null, null, null, null],
+    [[], [], [], [], []],
+    [[], [], [], [], []],
+    [[], [], [], [], []],
+    [[], [], [], [], []],
+    [[], [], [], [], []],
   ],
 };
 
@@ -28,8 +28,13 @@ export const colorsReducer = (state, action) => {
 
     case ACTION_TYPES.PAINT_CELL:
       const { rowPos, colPos } = action;
-      const updatedGrid = [...state.grid];
-      updatedGrid[rowPos][colPos] = state.selectedColor;
+      const updatedGrid = state.grid.map((row, rowIndex) =>
+        rowIndex === rowPos
+          ? row.map((cell, colIndex) =>
+              colIndex === colPos ? [...cell, state.selectedColor] : cell
+            )
+          : row
+      );
       return {
         ...state,
         grid: updatedGrid,
@@ -43,18 +48,13 @@ export const colorsReducer = (state, action) => {
 
     case ACTION_TYPES.PAINT_EMPTY_CELLS:
       const emptyGrid = state.grid.map((row) =>
-        row.map((cell) => (cell === null ? state.selectedColor : cell))
+        row.map((cell) => (cell.length === 0 ? state.selectedColor : cell))
       );
       return { ...state, grid: emptyGrid };
 
     case ACTION_TYPES.PAINT_COLORED_CELLS:
       const coloredGrid = state.grid.map((row) =>
-        row.map((cell) => {
-          if (cell !== null) {
-            return state.selectedColor;
-          }
-          return cell;
-        })
+        row.map(() => state.selectedColor)
       );
       return {
         ...state,

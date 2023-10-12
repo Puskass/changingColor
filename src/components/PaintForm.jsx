@@ -18,7 +18,7 @@ const PaintForm = ({ state, dispatch }) => {
   const handleRadioOptionChange = (option) => {
     dispatch({
       type: ACTION_TYPES.SET_RADIO_OPTION,
-      option: option,
+      option,
     });
   };
   return (
