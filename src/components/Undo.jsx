@@ -1,19 +1,12 @@
 import React from "react";
+import { ACTION_TYPES } from "../reducer/colorsReducer";
 
-const Undo = () => {
-  const handleUndo = (rowPosition, colPosition) => {
-    dispatch({
-      type: ACTION_TYPES.UNDO_COLOR,
-      rowPos: rowPosition,
-      colPos: colPosition,
-    });
+const Undo = ({ cell, rowPos, colPos, dispatch }) => {
+  const handleUndo = () => {
+    dispatch({ type: ACTION_TYPES.UNDO_COLOR, rowPos, colPos });
   };
 
-  return (
-    <button className="mt-2" onClick={handleUndo}>
-      <span className="text-xs hover:text-lime-500">UNDO</span>
-    </button>
-  );
+  return <>{cell.length > 0 && <button onClick={handleUndo}>UNDO</button>}</>;
 };
 
 export default Undo;

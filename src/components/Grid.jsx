@@ -1,12 +1,12 @@
 import React from "react";
 import Cell from "./Cell";
 
-const Grid = ({ grid, dispatch, selectedColor }) => {
-  console.log(grid);
+const Grid = ({ grid, dispatch }) => {
+  //console.log(grid);
   return (
-    <>
+    <ul className="list-none">
       {grid.map((row, rowPos) => (
-        <div className="flex justify-evenly" key={rowPos}>
+        <ul className="flex justify-evenly" key={rowPos}>
           {row.map((cell, colPos) => (
             <Cell
               key={colPos}
@@ -14,12 +14,11 @@ const Grid = ({ grid, dispatch, selectedColor }) => {
               rowPos={rowPos}
               colPos={colPos}
               dispatch={dispatch}
-              selectedColor={selectedColor}
             />
           ))}
-        </div>
+        </ul>
       ))}
-    </>
+    </ul>
   );
 };
 

@@ -1,22 +1,27 @@
 import React from "react";
 import { ACTION_TYPES } from "../reducer/colorsReducer";
 
-const Cell = ({ cell, rowPos, colPos, dispatch, selectedColor }) => {
+const Cell = ({ cell, rowPos, colPos, dispatch }) => {
+  const backgroundColor =
+    cell && cell.length > 0 ? cell[cell.length - 1] : "white";
   return (
-    <div
-      className={`w-12 h-12 border border-black mb-3 `}
-      style={{
-        backgroundColor: cell === null ? "white" : cell,
-        cursor: selectedColor ? "pointer" : "default",
-      }}
-      onClick={() => {
-        if (selectedColor) {
-          dispatch({ type: ACTION_TYPES.PAINT_CELL, rowPos, colPos });
-        }
-      }}
+    <li
+      className={`w-16 h-16 border border-black mb-3 hover:transition-colors hover:duration-300 hover:border-yellow-500 hover:cursor-pointer`}
     >
-      {" "}
-    </div>
+      <div
+        className="h-2/3 w-full"
+        style={{ backgroundColor }}
+        onClick={() => {
+          dispatch({ type: ACTION_TYPES.SET_CELL_COLOR, rowPos, colPos });
+        }}
+      ></div>
+      <button
+        className="text-center w-full"
+        onClick={() => dispatch({ type: ACTION_TYPES.UNDO, rowPos, colPos })}
+      >
+        &#8592;
+      </button>
+    </li>
   );
 };
 

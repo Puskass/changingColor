@@ -2,34 +2,17 @@ import React from "react";
 import ColorOptions from "../common/ColorOptions";
 import { ACTION_TYPES } from "../reducer/colorsReducer";
 
-const PaintForm = ({ state, dispatch }) => {
-  const handlePaintClick = (e) => {
-    e.preventDefault();
-    if (state.selectedRadioOption === "empty") {
-      dispatch({
-        type: ACTION_TYPES.PAINT_EMPTY_CELLS,
-      });
-    } else if (state.selectedRadioOption === "colored") {
-      dispatch({
-        type: ACTION_TYPES.PAINT_COLORED_CELLS,
-      });
-    }
-  };
-  const handleRadioOptionChange = (option) => {
-    dispatch({
-      type: ACTION_TYPES.SET_RADIO_OPTION,
-      option,
-    });
-  };
+const PaintForm = ({ dispatch }) => {
   return (
-    <form>
-      <div className="my-3">
-        <h1 className="text-2xl font-medium my-2">Select Default Color</h1>
+    <form className="p-4 border rounded-lg shadow-md my-8">
+      <div className="mb-4">
+        <h1 className="text-xl font-semibold mb-2">Select Default Color</h1>
         <select
+          className="w-full p-2 border rounded"
           defaultValue=""
           onChange={(e) =>
             dispatch({
-              type: ACTION_TYPES.SET_DEFAULT_COLOR,
+              type: ACTION_TYPES.SET_COLOR,
               color: e.target.value,
             })
           }
@@ -43,37 +26,28 @@ const PaintForm = ({ state, dispatch }) => {
         </select>
       </div>
 
-      <div className="my-2">
-        <div>
-          <input
-            type="radio"
-            name="radioOptions"
-            value="empty"
-            checked={state.selectedRadioOption === "empty"}
-            onChange={() => handleRadioOptionChange("empty")}
-          />
-          <label className="ml-2 text-lg">Empty Ones</label>
-        </div>
-        <div>
-          <input
-            type="radio"
-            name="radioOptions"
-            value="colored"
-            checked={state.selectedRadioOption === "colored"}
-            onChange={() => handleRadioOptionChange("colored")}
-          />
-          <label className="ml-2 text-lg">Colored Ones</label>
-        </div>
-      </div>
-      <div className="my-2 mb-4 text-center">
+      <div className="flex flex-col space-y-4">
         <button
-          className=" bg-blue-600 text-white  
-          font-medium text-center text-lg 
-          px-5 py-2.5 rounded-lg hover:bg-blue-500"
-          onClick={handlePaintClick}
-          disabled={!state.selectedColor}
+          className="p-2 bg-blue-500 text-white rounded hover:bg-blue-700 transition duration-300"
+          type="button"
+          onClick={() =>
+            dispatch({
+              type: ACTION_TYPES.PAINT_EMPTY_CELLS,
+            })
+          }
         >
-          Paint
+          Paint Empty Ones
+        </button>
+        <button
+          className="p-2 bg-green-500 text-white rounded hover:bg-green-700 transition duration-300"
+          type="button"
+          onClick={() =>
+            dispatch({
+              type: ACTION_TYPES.PAINT_COLORED_CELLS,
+            })
+          }
+        >
+          Paint Colored Ones
         </button>
       </div>
     </form>
